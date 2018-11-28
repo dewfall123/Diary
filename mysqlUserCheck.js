@@ -1,16 +1,23 @@
+// npm i mysql request
+// 然后node执行
+
 'use strict';
+const password = '';
+const port = '';
+const msger = ''; // 消息接受者 为空则不发消息
 
-
+// 先执行 npm i mysql
 const mysql = require('mysql');
+const request = require('request');
 mysql && console.log('mysql加载成功...');
 const args = process.argv.splice(2);
-console.log('密码:' + args[0]);
+console.log('密码:' + password);
 
 const option = {
     host: 'localhost',
     user: 'root',
-    password: args[0] || '2017!@#QAZWSX',
-    port: args[1] || '3306',
+    password: password || '',
+    port: port || '3306',
     database: 'mysql',
 };
 
@@ -21,6 +28,7 @@ console.log('mysql连接' + connection.state);
 const selectUsers = `select distinct concat("'", user, "'", "@", "'", host, "'") as user from mysql.user`;
 let userList = [];
 let grants = '';
+let output = '';
 connection.query(selectUsers, function (error, results, fields) {
     if (error) {
         console.log('查询出错');
@@ -42,10 +50,17 @@ connection.query(selectUsers, function (error, results, fields) {
             grants += str;
             L--;
             if (L <= 0) {
-                console.log(`\n\n`);
-                console.log(userList.join('\n'));
-                console.log(`\n`);
-                console.log(grants);
+                output += ('数据库审计\n');
+                output += (`\n`);
+                output += ('1.当前数据库的用户\n');
+                output += (userList.join('\n'));
+                output += (`\n\n`);
+                output += ('2.当前数据库的用户权限\n');
+                output += (grants);
+                console.log(output);
+
+                const msgUrl = `http://im.2980.com:8088/sendmsg?digitids=${msger}&content=${encodeURIComponent(output)}`;
+                msger && request(msgUrl);
             }
         });
         connectionI.end();
