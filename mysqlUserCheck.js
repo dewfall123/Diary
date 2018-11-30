@@ -45,9 +45,13 @@ connection.query(selectUsers, function (error, results, fields) {
                 console.log('查询权限出错');
                 throw error;
             }
+            
             let key = Object.keys(results[0])[0];
-            let str = `${key}\n${results[0][key]}\n`;
-            grants += str;
+            grants += `${key}\n`;
+            results.forEach(rowI => {
+                let str = `${rowI[key]}\n`;
+                grants += str;
+            });
             L--;
             if (L <= 0) {
                 output += ('数据库审计\n');

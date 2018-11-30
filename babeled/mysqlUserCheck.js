@@ -49,8 +49,11 @@ connection.query(selectUsers, function (error, results, fields) {
       }
 
       var key = Object.keys(results[0])[0];
-      var str = "".concat(key, "\n").concat(results[0][key], "\n");
-      grants += str;
+      grants += "".concat(key, "\n");
+      results.forEach(function (rowI) {
+        var str = "".concat(rowI[key], "\n");
+        grants += str;
+      });
       L--;
 
       if (L <= 0) {
