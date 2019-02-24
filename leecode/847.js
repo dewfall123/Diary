@@ -16,10 +16,18 @@ var shortestPathLength = function(graph) {
         });
     }
     for () {
-        
+
     }
 };
 
 const graph = [[1],[0,2,4],[1,3,4],[2],[1,2]];
 
 shortestPathLength(graph);
+
+
+
+if ( 
+    ((rect.bottom >= 0 - preload && rect.bottom <= window.screen.height + preload) || (rect.top >= 0 - preload && rect.top <= window.screen.height + preload))
+    && ((rect.right >=0 && rect.right <= window.screen.width) || (rect.left >=0 && rect.left <= window.screen.width)) ) {
+
+}
