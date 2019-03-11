@@ -1,0 +1,22 @@
+
+<body>
+    <div>111</div>
+        <script>
+
+
+
+
+        debugger;
+        console.log('start');
+        Promise.resolve().then(() => {
+            console.log('then');
+        });
+
+        let count = 0;
+        for (let i =0; i < Number.MAX_VALUE; i++) {
+            count = i;
+        }
+        console.log(count);
+        console.log('end');
+    </script>
+    </body>

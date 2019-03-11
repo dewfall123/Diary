@@ -1,0 +1,26 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div>1</div>
+    <script>
+        // 获取json数据
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', 'https://sta.2980.com/api/ping.html');
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            console.log(xhr.readyState);
+            console.log(xhr.responseType);
+            console.log(xhr.responseText);
+            console.log(xhr.responseURL);
+            console.log(xhr.responseXML);
+            console.log(xhr.response);
+        }
+    </script>
+</body>
+</html>
