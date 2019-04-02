@@ -1,0 +1,68 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+    .container {
+        height: 100%;
+        width: 100%;
+    }
+    div {
+        height: 100%;
+    }
+    /* .left {
+        position: absolute;
+        background: red;
+        opacity: 0.3;
+        width: 200px;
+    }
+    .center {
+        background: yellow;
+        opacity: 0.3;
+        margin: 0 200px;
+    }
+    .right {
+        position: absolute;
+        background: green;
+        right: 0;
+        opacity: 0.3;
+        width: 200px;
+        top: 0;
+    } */
+
+    /* .left {
+        float: left;
+        background: red;
+        opacity: 0.3;
+        width: 200px;
+    }
+    .center {
+        background: yellow;
+        opacity: 0.3;
+        margin: 0 200px;
+    }
+    .right {
+        float: right;
+        background: green;
+        opacity: 0.3;
+        width: 200px;
+    } */
+
+    .container {
+        display: flex;
+    }
+    .left, .right{
+        flex-basis: 200px;
+    }
+    .center {
+        flex-grow: 1;
+    }
+
+
+</style>
+<div class="container">
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+</div>

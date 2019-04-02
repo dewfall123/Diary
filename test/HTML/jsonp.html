@@ -1,0 +1,24 @@
+<body>
+    <script>
+        function getData(data) {
+            console.log(data);
+        }
+        const scrTag = document.createElement('script');
+        scrTag.src = 'http://localhost:3000/script.js';
+        scrTag.addEventListener('load', function() {
+            console.log('加载完成');
+        });        
+        scrTag.addEventListener('error', function() {
+            console.log('加载完成');
+        });
+        // document.body.appendChild(scrTag);
+    </script>
+    <!-- <script src="http://localhost:3000/script.js"></script> -->
+    <script>
+        console.log('继续解析dom');
+        window.addEventListener('unload', function() {
+            alert('unload');
+            console.log('触发unload');
+        });
+    </script>
+</body>
