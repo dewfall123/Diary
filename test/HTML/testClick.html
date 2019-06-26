@@ -1,0 +1,26 @@
+<!-- click: 鼠标单击时触发； dblclick：鼠标双击时触发； mouseenter：鼠标进入时触发；
+     mouseleave：鼠标移出时触发； 
+     mousemove：鼠标在DOM内部移动时触发； 
+     hover：鼠标进入和退出时触发两个函数，相当于mouseenter加上mouseleave。 -->
+<body>
+    <div id="div" style="width: 200px;height: 200px;background: rgba(255.255,0,.1);">
+
+    </div>
+    <script>
+        [
+            'click',
+            'mouseenter',
+            'mouseleave',
+            'mousemove',
+            'hover',
+            'mousedown',
+            'mouseout',
+            'mouseover',
+            'mouseup',
+        ].forEach(i => {
+            document.getElementById('div').addEventListener(i, () => {
+                console.log(i);
+            });
+        });
+    </script>
+</body>
