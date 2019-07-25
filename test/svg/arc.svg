@@ -1,0 +1,8 @@
+
+<svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="21351" width="200" height="200">
+    <linearGradient id="Gradient">
+        <stop offset="0%" stop-color="#E57D67"/>
+        <stop offset="100%" stop-color="#FFE269"/>
+    </linearGradient>
+    <circle cx="512" cy="512" r="450" stroke-width="50" stroke="url(#Gradient)" fill="transparent">></circle>
+</svg>
