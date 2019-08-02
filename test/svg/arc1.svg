@@ -1,0 +1,10 @@
+ <svg id="svg" width="200" height="200" viewBox="0 0 200 200" version="1.1" 
+ xmlns="http://www.w3.org/2000/svg">
+     <linearGradient id="Gradient">
+        <stop offset="0%" stop-color="#E57D67"/>
+        <stop offset="100%" stop-color="#FFE269"/>
+    </linearGradient>
+    <text x="100" y="100" font-family="PingFangSC-Regular,sans-serif" font-size="38" 
+        font-weight="bold"
+     fill="url(#Gradient)">内销</text>
+</svg>

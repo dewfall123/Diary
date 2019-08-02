@@ -1,0 +1,14 @@
+<svg t="1563959349178" class="icon" viewBox="0 0 1000 1000"
+    version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6255" width="200" height="200">
+    <linearGradient id="Gradient">
+        <stop offset="0%" stop-color="#E57D67"/>
+        <stop offset="100%" stop-color="#FFE269"/>
+    </linearGradient>
+    <circle fill="none" stroke="url(#Gradient)" stroke-width="50"
+        stroke-linecap="round"
+        stroke-miterlimit="1" cx="500" cy="500" r="250">
+    </circle>
+    <circle fill="" cx="675" cy="325" r="50"></circle>
+    <text x="750" y="350" font-family="Verdana" 
+        font-size="55">PD1829</text>
+</svg>
