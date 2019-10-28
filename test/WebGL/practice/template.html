@@ -1,0 +1,103 @@
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+        }
+        #canvas {
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+	<!-- 顶点着色器源码 -->
+	<script type="shader-source" id="vertexShader">
+        void main(){
+            //声明顶点位置
+            gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+            //声明要绘制的点的大小。
+            gl_PointSize = 10.0;
+        }
+	</script>
+	
+	<!-- 片元着色器源码 -->
+	<script type="shader-source" id="fragmentShader">
+        void main(){
+            //设置像素颜色为红色
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0); 
+        }
+    </script>
+
+    <script>
+        function getSource(id) {
+            return document.getElementById(id).innerHTML;
+        }
+
+        function createShaderFromScript(gl, type, id) {
+            const source = getSource(id);
+            const shader = gl.createShader(type);
+            // 添加源码
+            gl.shaderSource(shader, source);
+            // 编译源码
+            gl.compileShader(shader);
+            //检测是否编译正常。
+            const success = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+            if (success) {
+                return shader;
+            }
+            console.error(gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+        }
+
+        function createProgram(gl, vertexShader, fragmentShader) {
+            //创建着色器程序
+            const program = gl.createProgram();
+            //将顶点着色器挂载在着色器程序上。
+            vertexShader && gl.attachShader(program, vertexShader); 
+            //将片元着色器挂载在着色器程序上。
+            fragmentShader && gl.attachShader(program, fragmentShader);
+            //链接着色器程序
+            gl.linkProgram(program);
+            const result = gl.getProgramParameter(program, gl.LINK_STATUS);
+            if (result) {
+                console.log('着色器程序创建成功');
+                return {
+                    program: program,
+                };
+            }
+            let errorLog = gl.getProgramInfoLog(program);
+            gl.deleteProgram(program);
+            throw errorLog;
+        }
+
+        function handleShaderProgram(gl) {
+            const vertexShader = createShaderFromScript(gl, gl.VERTEX_SHADER, 'vertexShader');
+            const fragmentShader = createShaderFromScript(gl, gl.FRAGMENT_SHADER, 'fragmentShader');
+            const { program } = createProgram(gl, vertexShader, fragmentShader);
+            gl.useProgram(program);
+
+            //设置清空画布颜色为黑色。
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+            //用上一步设置的清空画布颜色清空画布。
+            gl.clear(gl.COLOR_BUFFER_BIT);
+
+            //绘制点。
+            gl.drawArrays(gl.POINTS, 0, 1);
+        }
+
+        function resizeCanvas(canvas) {
+            const width = document.body.clientWidth;
+            const height = document.body.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+    </script>
+    <script>
+        const canvas = document.getElementById('canvas');
+        resizeCanvas(canvas);
+        const gl = canvas.getContext('webgl');
+        handleShaderProgram(gl);
+    </script>
+</body>
