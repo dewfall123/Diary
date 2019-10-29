@@ -14,29 +14,30 @@
         <!-- 顶点着色器源码 -->
         <script type="x-shader/x-vertex" id="vertexShader">
             precision mediump float;
-
-            attribute vec2 clickPosition;
+            // 接收顶点坐标 (x, y)
+            attribute vec2 pointPosition;
+            // 接收 canvas 的尺寸(width, height)
             attribute vec2 screenSize;
-
-            void main() {
-                //start 将屏幕坐标系转化为裁剪坐标（裁剪坐标系）
-            vec2 position = (clickPosition / screenSize) * 2.0 - 1.0; 
-            position = position * vec2(1.0, -1.0);
-            gl_Position = vec4(position, 0, 1);
-            //end 将屏幕坐标系转化为裁剪坐标（裁剪坐标系）
-            //声明要绘制的点的大小。
-            gl_PointSize = 10.0;
+            
+            attribute vec4 pointColor;
+            
+            varying vec4 v_color;
+            void main(){
+                vec2 position = (pointPosition / screenSize) * 2.0 - 1.0;
+                position = position * vec2(1.0,-1.0);
+                gl_Position = vec4(position, 0, 1);
+            
+                v_color = pointColor;
             }
         </script>
         
         <!-- 片元着色器源码 -->
         <script type="x-shader/x-fragment" id="fragmentShader">
             precision mediump float;
+            varying vec4 v_color;
 
-            uniform vec4 pointColor;
-            
             void main() {
-                gl_FragColor = pointColor /vec4(255, 255, 255, 1);
+                gl_FragColor = v_color / vec4(255, 255, 255, 1);
             }
         </script>
     
@@ -97,6 +98,15 @@
             function randomColor() {
                 return [ random(0, 255), random(0, 255), random(0, 255), +Math.random().toFixed(1) ];
             }
+
+            function createBuffer(gl, position, nSize) {
+                const buffer = gl.createBuffer();
+                gl.enableVertexAttribArray(position);
+                gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+                const [ size, type, normalize, stride, offset ] = [ nSize, gl.FLOAT, true, 0, 0 ];
+                gl.vertexAttribPointer(position, size, type, normalize, stride, offset);
+                return buffer;
+            }
         </script>
         <script>
             const canvas = document.getElementById('canvas');
@@ -111,37 +121,42 @@
 
             //设置清空画布颜色为黑色。
             gl.clearColor(0.0, 0.0, 0.0, 1.0);
-
-            //用上一步设置的清空画布颜色清空画布。
             gl.clear(gl.COLOR_BUFFER_BIT);
 
-            //绘制点。
-            gl.drawArrays(gl.POINTS, 0, 1);
+            // 传递vertex数据
+            const pointPosition = gl.getAttribLocation(program, 'pointPosition');
+            const pointColor = gl.getAttribLocation(program, 'pointColor');
+
+            const screenSize = gl.getAttribLocation(program, 'screenSize');
+            gl.vertexAttrib2f(screenSize, canvas.width, canvas.height);
+            // 创建buffer
+            const pointBuffer = createBuffer(gl, pointPosition, 2);
+            const colorBuffer = createBuffer(gl, pointColor, 4);
 
             const points = [];
             canvas.addEventListener('click', e => {
-                const { x, y } = e;
-                const color = randomColor();
-                points.push({ x, y, color });
-                render(points);
+                points.push({
+                    x: e.x,
+                    y: e.y,
+                    color: randomColor(),
+                });
+                if (points.length % 3 === 0) {
+                    render();
+                }
             });
 
-            function render(points) {
-                gl.clearColor(0, 0, 0, 1.0);
+            function render() {
                 gl.clear(gl.COLOR_BUFFER_BIT);
+                const pointsPositions = points.map(p => [ p.x, p.y ]).flat();
+                const colors = points.map(p => p.color).flat();
+                // 绑定buffer到ARRAY_BUFFER
+                gl.bindBuffer(gl.ARRAY_BUFFER, pointBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(pointsPositions), gl.DYNAMIC_DRAW);
 
-                const clickPosition = gl.getAttribLocation(program, 'clickPosition');
-                const screenSize = gl.getAttribLocation(program, 'screenSize');
-                const pointColor = gl.getUniformLocation(program, 'pointColor');
+                gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.DYNAMIC_DRAW);
 
-                gl.vertexAttrib2f(screenSize, canvas.width, canvas.height);
-                for (let point of points) {
-                    const { x, y, color } = point;
-                    gl.vertexAttrib2f(clickPosition, x, y);
-                    gl.uniform4f(pointColor, ...color);
-
-                    gl.drawArrays(gl.POINTS, 0, 1);
-                }
+                gl.drawArrays(gl.TRIANGLES, 0, points.length);
             }
         </script>
     </body>
