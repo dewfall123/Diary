@@ -1,12 +1,14 @@
-    <svg t="1565084867211" class="icon" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg"
-        p-id="8379" width="150" height="50">
-        <linearGradient id="Gradient">
-            <stop offset="0%" stop-color="#B54CF6"/>
-            <stop offset="100%" stop-color="#6E96FB"/>
-        </linearGradient>
-        <text x="-25" y="44" 
-            font-family="PingFangSC-Regular"
-            font-weight="400"
-            fill="url(#Gradient)"
-            font-size="32">预警中心</text>
-    </svg>
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg t="1563432410332" class="icon" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4153"
+    xmlns:xlink="http://www.w3.org/1999/xlink" width="1568" height="400" fill="transparent;">
+    <text x="-140%" y="25" font-family="PingFangSC-Regular" font-weight="300" fill="#ffffff" font-size="6">
+        售后渠道 售后工单 + 预估失效率
+    </text>
+    <text x="-140%" y="35" font-family="PingFangSC-Regular" font-weight="300" fill="#ffffff" font-size="6">
+        实时预警
+    </text>
+    <text x="-140%" y="45" font-family="PingFangSC-Regular" font-weight="300" fill="#ffffff" font-size="6">
+        失效率趋势 + 坏机数量 + 版本灰度实时预警
+    </text>
+</svg>
