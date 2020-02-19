@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<style>
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  div {
+    width: 200px;
+    height: 100px;
+    border: 10px solid gold;
+    --border-radius: 20;
+    border-radius: calc(var(--border-radius) * 1px);
+    border-image: paint(gradientBorder) var(--border-radius);
+  }
+</style>
+<div></div>
+<script>
+  CSS.paintWorklet.addModule('./gradientBorder.js');
+</script>
