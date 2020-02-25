@@ -45,7 +45,7 @@ var longestArithSeqLength = function(A) {
     const dp = [];
     for (let end = 0; end < A.length; end++) {
         dp[end] = {};
-        for (let i = end - 1; i >= 0; i--) {
+        for (let i = 0; i < end; i++) {
             const diff = A[end] - A[i];
             const count = (dp[i][diff] || 1) + 1;
             max < count && ( max = count );
