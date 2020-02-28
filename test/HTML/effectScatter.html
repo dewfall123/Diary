@@ -1,0 +1,25 @@
+
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #282c52;
+    }
+    #pin {
+        --main-color: #00ffc6;
+        --size: 18px;
+        background: var(--main-color);
+        width: var(--size);
+        height: var(--size);
+        border-radius: var(--size);
+        position: relative;
+    }
+    #pin::after {
+        position: absolute;
+    }
+</style>
+<body>
+    <span id='pin'></span>
+</body>
+
