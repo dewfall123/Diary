@@ -1,3 +1,4 @@
-import { list } from './a.mjs'
+import { list, num } from './a.mjs'
 import './c.mjs'
 console.log(list)
+console.log(num)
