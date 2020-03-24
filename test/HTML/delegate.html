@@ -1,0 +1,23 @@
+<body>
+    <ul id="myLink">
+        <li id="1">aaa</li>
+        <li id="2">bbb</li>
+        <li id="3">ccc</li>
+    </ul>
+</body>
+
+<script>
+    function delegate(element, eventType, selector, fn) {
+        element.addEventListener(eventType, e => {
+            const target = e.target;
+            const eventEl = target.closest(selector);
+            if (element.contains(eventEl)) {
+                fn.call(eventEl, e);
+            }
+        })
+    }
+
+    delegate(document.getElementById('myLink'), 'click', 'li', e => {
+        console.log(e.target);
+    })
+</script>
