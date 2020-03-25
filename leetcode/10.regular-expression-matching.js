@@ -9,19 +9,29 @@
  * @return {boolean}
  */
 var isMatch = function(s, p) {
-    let sIndex = 0;
-    let pIndex = 0;
-    while (sIndex < s.length && pIndex < p.length) {
-        let sI = s[sIndex];
-        let pI = p[pIndex];
-        if (sI === pI || pI === '.') {
-            sI++;
-            pI++;
-            continue;
+    let matched = false;
+    function match(sIndex = 0, pIndex = 0) {
+        let sChart = s[sIndex];
+        let pChart = p[pIndex];
+        let pNextChart = p[pIndex + 1];
+        // end
+        if (!sChart && !pChart) {
+            matched = true;
+            return;
         }
-        if (pI === '*') {
-            
+        if (pNextChart === '*') {
+            match(sIndex, pIndex + 2);
+            if (sChart === pChart || pChart === '.' && sChart) {
+                match(sIndex + 1, pIndex);
+            }
+        } else {   
+            if (sChart === pChart || pChart === '.' && sChart) {
+                match(sIndex + 1, pIndex + 1);
+            }
         }
     }
+    match();
+    return matched;
 };
 
+isMatch('aa', '.*');
