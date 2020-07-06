@@ -44,7 +44,8 @@ var countSmaller = function (nums) {
 
   // return results;
 
-  const counts = [];
+  nums = nums.map((val, index) => ({val, index}));
+  const counts = Array(nums.length).fill(0);
   function mergeSort(start, end) {
     if (start >= end) {
       return;
@@ -53,6 +54,7 @@ var countSmaller = function (nums) {
     mergeSort(start, mid);
     mergeSort(mid + 1, end);
 
+    merge(start, end);
   }
 
   function merge(start, end) {
@@ -60,14 +62,29 @@ var countSmaller = function (nums) {
     let leftIndex = start;
     let rightIndex = mid + 1;
     const temp = [];
-    while (leftIndex <= mid || rightIndex <= end) {
-      let push = 0;
-      if (leftIndex > mid) {
-        temp.push(rightIndex++);
+    while (leftIndex <= mid && rightIndex <= end) {
+      if (nums[leftIndex].val <= nums[rightIndex].val) {
+        temp.push(nums[rightIndex++]);
+      } else {
+        counts[nums[leftIndex].index] += end + 1 - rightIndex;
+        temp.push(nums[leftIndex++]);
       }
-      
+    }
+    while (leftIndex <= mid) {
+      temp.push(nums[leftIndex++]);
+    }
+    while (rightIndex <= end) {
+      temp.push(nums[rightIndex++]);
+    }
+    for (let i = start; i <= end; i++) {
+      nums[i] = temp[i - start];
     }
   }
+
+  mergeSort(0, nums.length - 1);
+
+  console.log(nums);
+  return counts;
 };
 // @lc code=end
 countSmaller([5,2,6,1]);
