@@ -18,11 +18,48 @@ var countRangeSum = function(nums, lower, upper) {
         sum += i;
         sums.push(sum);
     }
-
-    // find sum[j] - sum[i] is >= a and <= b
-    // sum[j] >= sum[i] + a
-    // sum[j] <= sum[i] - b
+    sums.unshift(0);
     
+    let temp = [];
+    let result = 0;
+
+    function mergeSort(start = 1, end = sums.length) {
+        if (start >= end) {
+            return;
+        }
+        const mid = Math.floor((start + end) / 2);
+        mergeSort(start, mid);
+        mergeSort(mid + 1, end);
+
+        let tempIndex = start;
+        let rightIndex = mid + 1;
+        let lowerIndex = mid + 1;
+        let upperIndex = mid + 1;
+        for (let i = start; i <= mid; i++) {
+            while (lowerIndex <= end && sums[lowerIndex] - sums[i] > lower) {
+                lowerIndex++;
+            }
+            while (upperIndex <= end && sums[upperIndex] - sums[i] <= upper) {
+                upperIndex++;
+            }
+            while (rightIndex <= end && sums[i] >= sums[rightIndex] ) {
+                temp[tempIndex++] = sums[rightIndex++];
+            }
+            temp[tempIndex++] = sums[i];
+            result += upperIndex - lowerIndex;
+        }
+
+        for (let i = start; i < temp.length; i++) {
+            sums[i] = temp[i];
+        }
+    }
+
+
+    mergeSort()
+    temp = undefined;
+
+    return result;
 };
 // @lc code=end
+countRangeSum([-2,5,-1]);
 
