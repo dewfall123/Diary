@@ -21,9 +21,9 @@ var countRangeSum = function(nums, lower, upper) {
     sums.unshift(0);
     
     let temp = [];
-    let result = 0;
+    let count = 0;
 
-    function mergeSort(start = 1, end = sums.length) {
+    function mergeSort(start = 0, end = sums.length - 1) {
         if (start >= end) {
             return;
         }
@@ -36,7 +36,7 @@ var countRangeSum = function(nums, lower, upper) {
         let lowerIndex = mid + 1;
         let upperIndex = mid + 1;
         for (let i = start; i <= mid; i++) {
-            while (lowerIndex <= end && sums[lowerIndex] - sums[i] > lower) {
+            while (lowerIndex <= end && sums[lowerIndex] - sums[i] < lower) {
                 lowerIndex++;
             }
             while (upperIndex <= end && sums[upperIndex] - sums[i] <= upper) {
@@ -46,7 +46,7 @@ var countRangeSum = function(nums, lower, upper) {
                 temp[tempIndex++] = sums[rightIndex++];
             }
             temp[tempIndex++] = sums[i];
-            result += upperIndex - lowerIndex;
+            count += upperIndex - lowerIndex;
         }
 
         for (let i = start; i < temp.length; i++) {
@@ -58,8 +58,8 @@ var countRangeSum = function(nums, lower, upper) {
     mergeSort()
     temp = undefined;
 
-    return result;
+    return count;
 };
 // @lc code=end
-countRangeSum([-2,5,-1]);
+countRangeSum([-2,5,-1], -2, 2);
 
