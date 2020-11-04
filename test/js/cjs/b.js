@@ -1,6 +1,17 @@
-require('./c')
-require.cache = {}
+// require('./c')
+// require.cache = {}
 
-const list = require('./a')
+const num = require("./a");
+console.log(num);
 
-console.log(list)
+setTimeout(() => {
+  console.log("3s后");
+  console.log(num);
+  const latestNum = require("./a");
+  console.log(latestNum);
+}, 3000);
+
+// console.log(list);
+
+// const list1 = require("./a");
+// console.log(list1);
